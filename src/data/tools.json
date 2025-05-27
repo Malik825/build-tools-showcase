@@ -1,5 +1,98 @@
 [
-  { "name": "Webpack", "description": "A module bundler for JavaScript applications." },
-  { "name": "TypeScript", "description": "A typed superset of JavaScript." },
-  { "name": "Sass", "description": "A CSS preprocessor for enhanced styling." }
+  {
+    "id": 1,
+    "name": "Webpack",
+    "description": "A static module bundler for modern JavaScript applications. Webpack builds a dependency graph and bundles your modules into optimized assets.",
+    "category": "Bundlers",
+    "rating": 4.8,
+    "downloads": "1.2M",
+    "lastUpdate": "2 days ago",
+    "features": ["Hot Reload", "Tree Shaking", "Code Splitting"],
+    "color": "blue",
+    "icon": "hammer-outline"
+  },
+  {
+    "id": 2,
+    "name": "Vite",
+    "description": "Next generation frontend tooling. Lightning fast cold server start with instant hot module replacement.",
+    "category": "Build Tool",
+    "rating": 4.9,
+    "downloads": "890K",
+    "lastUpdate": "1 week ago",
+    "features": ["ESM", "TypeScript", "Fast HMR"],
+    "color": "emerald",
+    "icon": "flash-outline"
+  },
+  {
+    "id": 3,
+    "name": "Rollup",
+    "description": "A module bundler for JavaScript which compiles small pieces of code into something larger and more complex.",
+    "category": "Bundlers",
+    "rating": 4.7,
+    "downloads": "650K",
+    "lastUpdate": "3 days ago",
+    "features": ["ES Modules", "Tree Shaking", "Plugins"],
+    "color": "purple",
+    "icon": "code-outline"
+  },
+  {
+    "id": 4,
+    "name": "Jest",
+    "description": "Delightful JavaScript testing framework with a focus on simplicity. Works with most JavaScript projects.",
+    "category": "Testing",
+    "rating": 4.6,
+    "downloads": "2.1M",
+    "lastUpdate": "5 days ago",
+    "features": ["Snapshot Testing", "Mocking", "Coverage"],
+    "color": "red",
+    "icon": "shield-checkmark-outline"
+  },
+  {
+    "id": 5,
+    "name": "ESLint",
+    "description": "Find and fix problems in your JavaScript code. ESLint statically analyzes your code to quickly find problems.",
+    "category": "Linting",
+    "rating": 4.8,
+    "downloads": "1.8M",
+    "lastUpdate": "1 week ago",
+    "features": ["Configurable", "Extensible", "Auto-fix"],
+    "color": "yellow",
+    "icon": "checkmark-circle-outline"
+  },
+  {
+    "id": 6,
+    "name": "TypeScript",
+    "description": "TypeScript is JavaScript with syntax for types. TypeScript code converts to JavaScript, which runs anywhere JavaScript runs.",
+    "category": "Compilers",
+    "rating": 4.9,
+    "downloads": "3.2M",
+    "lastUpdate": "2 weeks ago",
+    "features": ["Type Safety", "IntelliSense", "Refactoring"],
+    "color": "indigo",
+    "icon": "document-text-outline"
+  },
+  {
+    "id": 7,
+    "name": "Parcel",
+    "description": "The zero configuration build tool for the web. Parcel combines a great out-of-the-box development experience.",
+    "category": "Bundlers",
+    "rating": 4.5,
+    "downloads": "420K",
+    "lastUpdate": "1 week ago",
+    "features": ["Zero Config", "Hot Reloading", "Code Splitting"],
+    "color": "orange",
+    "icon": "cube-outline"
+  },
+  {
+    "id": 8,
+    "name": "Prettier",
+    "description": "An opinionated code formatter. Prettier enforces a consistent style by parsing your code and re-printing it.",
+    "category": "Linting",
+    "rating": 4.7,
+    "downloads": "1.5M",
+    "lastUpdate": "3 days ago",
+    "features": ["Opinionated", "Consistent", "Multi-language"],
+    "color": "pink",
+    "icon": "brush-outline"
+  }
 ]
