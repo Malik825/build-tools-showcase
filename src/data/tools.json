@@ -1,0 +1,5 @@
+[
+  { "name": "Webpack", "description": "A module bundler for JavaScript applications." },
+  { "name": "TypeScript", "description": "A typed superset of JavaScript." },
+  { "name": "Sass", "description": "A CSS preprocessor for enhanced styling." }
+]
