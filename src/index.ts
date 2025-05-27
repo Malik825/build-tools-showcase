@@ -1,26 +1,15 @@
 import './style.scss';
 import toolsData from './data/tools.json';
+import { Tool, SortOption } from './models/types';
+import { toggleBookmark, showToolInfo, tryTool, loadBookmarks } from './utils/toolUtils';
 
-interface Tool {
-  id: number;
-  name: string;
-  description: string;
-  category: string;
-  rating: number;
-  downloads: string;
-  lastUpdate: string;
-  features: string[];
-  color: string;
-  icon: string;
-}
-
-let currentTools: Tool[] = toolsData;
-let filteredTools: Tool[] = toolsData;
-let selectedCategory: string = "All";
-let searchQuery: string = "";
-let sortBy: string = "popularity";
+let currentTools: Tool[] = toolsData as Tool[];
+let filteredTools: Tool[] = toolsData as Tool[];
+let selectedCategory: string = 'All';
+let searchQuery: string = '';
+let sortBy: SortOption = 'popularity';
 let visibleToolsCount: number = 6;
-let bookmarkedTools: Set<number> = new Set();
+let bookmarkedTools: Set<number> = loadBookmarks();
 
 const themeToggle = document.getElementById('theme-toggle') as HTMLButtonElement;
 const themeIcon = document.getElementById('theme-icon') as HTMLElement;
@@ -55,7 +44,7 @@ function setupTheme(): void {
 function toggleTheme(): void {
   const currentTheme = document.body.classList.contains('dark-theme') ? 'dark' : 'light';
   const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-  
+
   document.body.className = `${newTheme}-theme`;
   localStorage.setItem('theme', newTheme);
   updateThemeIcon(newTheme);
@@ -67,39 +56,43 @@ function updateThemeIcon(theme: string): void {
 
 function setupEventListeners(): void {
   themeToggle.addEventListener('click', toggleTheme);
-  
+
   filterToggle.addEventListener('click', () => {
     filterPanel.classList.toggle('hidden');
   });
-  
+
   searchInput.addEventListener('input', (e) => {
     const target = e.target as HTMLInputElement;
     handleSearch(target.value);
   });
-  
+
   mobileSearchInput.addEventListener('input', (e) => {
     const target = e.target as HTMLInputElement;
     handleSearch(target.value);
   });
-  
+
   sortSelect.addEventListener('change', (e) => {
     const target = e.target as HTMLSelectElement;
-    handleSortChange(target.value);
+    handleSortChange(target.value as SortOption);
   });
-  
+
   loadMoreBtn.addEventListener('click', handleLoadMore);
 }
 
 function setupCategoryFilters(): void {
-  const categories = ["All", ...Array.from(new Set(toolsData.map(tool => tool.category)))];
-  
-  categoryFilters.innerHTML = categories.map(category => `
+  const categories = ['All', ...Array.from(new Set(currentTools.map((tool) => tool.category)))];
+
+  categoryFilters.innerHTML = categories
+    .map(
+      (category) => `
     <button class="filter-badge ${category === selectedCategory ? 'active' : ''}" 
             data-category="${category}">
       ${category}
     </button>
-  `).join('');
-  
+  `
+    )
+    .join('');
+
   categoryFilters.addEventListener('click', (e) => {
     const target = e.target as HTMLElement;
     if (target.classList.contains('filter-badge')) {
@@ -113,65 +106,67 @@ function handleSearch(query: string): void {
   searchQuery = query.toLowerCase();
   if (searchInput.value !== query) searchInput.value = query;
   if (mobileSearchInput.value !== query) mobileSearchInput.value = query;
-  
+
   filterAndSortTools();
   renderTools();
 }
 
 function handleCategoryChange(category: string): void {
   selectedCategory = category;
-  
-  categoryFilters.querySelectorAll('.filter-badge').forEach(badge => {
+
+  categoryFilters.querySelectorAll('.filter-badge').forEach((badge) => {
     badge.classList.toggle('active', badge.getAttribute('data-category') === category);
   });
-  
+
   filterAndSortTools();
   renderTools();
 }
 
-function handleSortChange(sort: string): void {
+function handleSortChange(sort: SortOption): void {
   sortBy = sort;
   filterAndSortTools();
   renderTools();
 }
 
 function filterAndSortTools(): void {
-  let filtered = toolsData;
-  
+  let filtered = [...currentTools];
+
   if (searchQuery) {
-    filtered = filtered.filter(tool =>
-      tool.name.toLowerCase().includes(searchQuery) ||
-      tool.description.toLowerCase().includes(searchQuery) ||
-      tool.category.toLowerCase().includes(searchQuery) ||
-      tool.features.some(feature => feature.toLowerCase().includes(searchQuery))
+    filtered = filtered.filter(
+      (tool) =>
+        tool.name.toLowerCase().includes(searchQuery) ||
+        tool.description.toLowerCase().includes(searchQuery) ||
+        tool.category.toLowerCase().includes(searchQuery) ||
+        tool.features.some((feature) => feature.toLowerCase().includes(searchQuery))
     );
   }
-  
-  if (selectedCategory !== "All") {
-    filtered = filtered.filter(tool => tool.category === selectedCategory);
+
+  if (selectedCategory !== 'All') {
+    filtered = filtered.filter((tool) => tool.category === selectedCategory);
   }
-  
+
   switch (sortBy) {
-    case "name":
+    case 'name':
       filtered.sort((a, b) => a.name.localeCompare(b.name));
       break;
-    case "recent":
+    case 'recent':
       filtered.sort((a, b) => {
-        const aRecent = a.lastUpdate.includes("day") ? 1 : a.lastUpdate.includes("week") ? 2 : 3;
-        const bRecent = b.lastUpdate.includes("day") ? 1 : b.lastUpdate.includes("week") ? 2 : 3;
+        const aRecent = a.lastUpdate.includes('day') ? 1 : a.lastUpdate.includes('week') ? 2 : 3;
+        const bRecent = b.lastUpdate.includes('day') ? 1 : b.lastUpdate.includes('week') ? 2 : 3;
         return aRecent - bRecent;
       });
       break;
-    case "category":
+    case 'category':
       filtered.sort((a, b) => a.category.localeCompare(b.category));
       break;
-    case "popularity":
+    case 'popularity':
     default:
       filtered.sort((a, b) => b.rating - a.rating);
       break;
   }
-  
+
   filteredTools = filtered;
+  visibleToolsCount = 6;
 }
 
 function handleLoadMore(): void {
@@ -180,12 +175,11 @@ function handleLoadMore(): void {
 }
 
 function updateStats(): void {
-  const totalTools = toolsData.length;
-  const popularTools = toolsData.filter(tool => tool.rating >= 4.5).length;
-  const recentTools = toolsData.filter(tool => 
-    tool.lastUpdate.includes("day") || tool.lastUpdate.includes("week")
-  ).length;
-  
+  const totalTools = currentTools.length;
+  const popularTools = currentTools.filter((tool) => tool.rating >= 4.5).length;
+  const recentTools = currentTools.filter((tool) => tool.lastUpdate.includes('day') || tool.lastUpdate.includes('week'))
+    .length;
+
   totalToolsEl.textContent = totalTools.toString();
   popularToolsEl.textContent = popularTools.toString();
   recentToolsEl.textContent = recentTools.toString();
@@ -194,26 +188,26 @@ function updateStats(): void {
 function renderTools(): void {
   const visibleTools = filteredTools.slice(0, visibleToolsCount);
   const hasMoreTools = visibleToolsCount < filteredTools.length;
-  
+
   if (visibleTools.length === 0) {
     toolGrid.innerHTML = '';
     emptyState.classList.remove('hidden');
     loadMoreContainer.classList.add('hidden');
     return;
   }
-  
+
   emptyState.classList.add('hidden');
   loadMoreContainer.classList.toggle('hidden', !hasMoreTools);
-  
+
   toolGrid.innerHTML = visibleTools.map((tool, index) => createToolCard(tool, index)).join('');
-  
+
   toolGrid.addEventListener('click', handleToolCardClick);
 }
 
 function createToolCard(tool: Tool, index: number): string {
   const isBookmarked = bookmarkedTools.has(tool.id);
   const animationDelay = (index * 0.1).toFixed(1);
-  
+
   return `
     <div class="tool-card" data-color="${tool.color}" style="animation-delay: ${animationDelay}s">
       <div class="tool-header">
@@ -240,7 +234,7 @@ function createToolCard(tool: Tool, index: number): string {
       <p class="tool-description">${tool.description}</p>
       
       <div class="tool-features">
-        ${tool.features.map(feature => `<span class="feature-badge">${feature}</span>`).join('')}
+        ${tool.features.map((feature) => `<span class="feature-badge">${feature}</span>`).join('')}
       </div>
       
       <div class="tool-footer">
@@ -271,13 +265,13 @@ function createToolCard(tool: Tool, index: number): string {
 function handleToolCardClick(e: Event): void {
   const target = e.target as HTMLElement;
   const button = target.closest('button');
-  
+
   if (!button) return;
-  
+
   const toolId = parseInt(button.getAttribute('data-tool-id') || '0');
-  
+
   if (button.classList.contains('bookmark-btn')) {
-    toggleBookmark(toolId, button);
+    toggleBookmark(toolId, button, bookmarkedTools);
   } else if (button.classList.contains('info-btn')) {
     showToolInfo(toolId);
   } else if (button.classList.contains('try-btn')) {
@@ -285,49 +279,6 @@ function handleToolCardClick(e: Event): void {
   }
 }
 
-function toggleBookmark(toolId: number, button: HTMLElement): void {
-  const icon = button.querySelector('ion-icon');
-  
-  if (bookmarkedTools.has(toolId)) {
-    bookmarkedTools.delete(toolId);
-    button.classList.remove('active');
-    if (icon) icon.setAttribute('name', 'bookmark-outline');
-  } else {
-    bookmarkedTools.add(toolId);
-    button.classList.add('active');
-    if (icon) icon.setAttribute('name', 'bookmark');
-  }
-  
-  localStorage.setItem('bookmarkedTools', JSON.stringify(Array.from(bookmarkedTools)));
-}
-
-function showToolInfo(toolId: number): void {
-  const tool = toolsData.find(t => t.id === toolId);
-  if (tool) {
-    alert(`${tool.name}\n\nCategory: ${tool.category}\nRating: ${tool.rating}/5\nDownloads: ${tool.downloads}\nLast Update: ${tool.lastUpdate}\n\nFeatures:\n• ${tool.features.join('\n• ')}\n\n${tool.description}`);
-  }
-}
-
-function tryTool(toolId: number): void {
-  const tool = toolsData.find(t => t.id === toolId);
-  if (tool) {
-    alert(`Opening ${tool.name}...\n\nThis would typically redirect to the tool's official website or documentation.`);
-  }
-}
-
-function loadBookmarks(): void {
-  const saved = localStorage.getItem('bookmarkedTools');
-  if (saved) {
-    try {
-      const bookmarks = JSON.parse(saved);
-      bookmarkedTools = new Set(bookmarks);
-    } catch (e) {
-      bookmarkedTools = new Set();
-    }
-  }
-}
-
 document.addEventListener('DOMContentLoaded', () => {
-  loadBookmarks();
   init();
 });
