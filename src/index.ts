@@ -1,7 +1,6 @@
 import './style.scss';
 import toolsData from './data/tools.json';
 
-// Tool data interface
 interface Tool {
   id: number;
   name: string;
@@ -15,7 +14,6 @@ interface Tool {
   icon: string;
 }
 
-// Application state
 let currentTools: Tool[] = toolsData;
 let filteredTools: Tool[] = toolsData;
 let selectedCategory: string = "All";
@@ -24,7 +22,6 @@ let sortBy: string = "popularity";
 let visibleToolsCount: number = 6;
 let bookmarkedTools: Set<number> = new Set();
 
-// DOM elements
 const themeToggle = document.getElementById('theme-toggle') as HTMLButtonElement;
 const themeIcon = document.getElementById('theme-icon') as HTMLElement;
 const filterToggle = document.getElementById('filter-toggle') as HTMLButtonElement;
@@ -41,7 +38,6 @@ const totalToolsEl = document.getElementById('total-tools') as HTMLElement;
 const popularToolsEl = document.getElementById('popular-tools') as HTMLElement;
 const recentToolsEl = document.getElementById('recent-tools') as HTMLElement;
 
-// Initialize the application
 function init(): void {
   setupTheme();
   setupEventListeners();
@@ -50,7 +46,6 @@ function init(): void {
   renderTools();
 }
 
-// Theme management
 function setupTheme(): void {
   const savedTheme = localStorage.getItem('theme') || 'light';
   document.body.className = `${savedTheme}-theme`;
@@ -70,7 +65,6 @@ function updateThemeIcon(theme: string): void {
   themeIcon.setAttribute('name', theme === 'light' ? 'moon-outline' : 'sunny-outline');
 }
 
-// Event listeners
 function setupEventListeners(): void {
   themeToggle.addEventListener('click', toggleTheme);
   
@@ -86,7 +80,6 @@ function setupEventListeners(): void {
   mobileSearchInput.addEventListener('input', (e) => {
     const target = e.target as HTMLInputElement;
     handleSearch(target.value);
-    searchInput.value = target.value; // Sync with desktop search
   });
   
   sortSelect.addEventListener('change', (e) => {
@@ -97,7 +90,6 @@ function setupEventListeners(): void {
   loadMoreBtn.addEventListener('click', handleLoadMore);
 }
 
-// Category filters
 function setupCategoryFilters(): void {
   const categories = ["All", ...Array.from(new Set(toolsData.map(tool => tool.category)))];
   
@@ -108,7 +100,6 @@ function setupCategoryFilters(): void {
     </button>
   `).join('');
   
-  // Add event listeners to category badges
   categoryFilters.addEventListener('click', (e) => {
     const target = e.target as HTMLElement;
     if (target.classList.contains('filter-badge')) {
@@ -118,10 +109,8 @@ function setupCategoryFilters(): void {
   });
 }
 
-// Search functionality
 function handleSearch(query: string): void {
   searchQuery = query.toLowerCase();
-  // Sync both search inputs
   if (searchInput.value !== query) searchInput.value = query;
   if (mobileSearchInput.value !== query) mobileSearchInput.value = query;
   
@@ -129,11 +118,9 @@ function handleSearch(query: string): void {
   renderTools();
 }
 
-// Category filtering
 function handleCategoryChange(category: string): void {
   selectedCategory = category;
   
-  // Update active state of category badges
   categoryFilters.querySelectorAll('.filter-badge').forEach(badge => {
     badge.classList.toggle('active', badge.getAttribute('data-category') === category);
   });
@@ -142,18 +129,15 @@ function handleCategoryChange(category: string): void {
   renderTools();
 }
 
-// Sort functionality
 function handleSortChange(sort: string): void {
   sortBy = sort;
   filterAndSortTools();
   renderTools();
 }
 
-// Filter and sort tools
 function filterAndSortTools(): void {
   let filtered = toolsData;
   
-  // Apply search filter
   if (searchQuery) {
     filtered = filtered.filter(tool =>
       tool.name.toLowerCase().includes(searchQuery) ||
@@ -163,12 +147,10 @@ function filterAndSortTools(): void {
     );
   }
   
-  // Apply category filter
   if (selectedCategory !== "All") {
     filtered = filtered.filter(tool => tool.category === selectedCategory);
   }
   
-  // Apply sorting
   switch (sortBy) {
     case "name":
       filtered.sort((a, b) => a.name.localeCompare(b.name));
@@ -190,16 +172,13 @@ function filterAndSortTools(): void {
   }
   
   filteredTools = filtered;
-  visibleToolsCount = 6; // Reset visible count when filtering
 }
 
-// Load more functionality
 function handleLoadMore(): void {
   visibleToolsCount += 6;
   renderTools();
 }
 
-// Update statistics
 function updateStats(): void {
   const totalTools = toolsData.length;
   const popularTools = toolsData.filter(tool => tool.rating >= 4.5).length;
@@ -212,7 +191,6 @@ function updateStats(): void {
   recentToolsEl.textContent = recentTools.toString();
 }
 
-// Render tools
 function renderTools(): void {
   const visibleTools = filteredTools.slice(0, visibleToolsCount);
   const hasMoreTools = visibleToolsCount < filteredTools.length;
@@ -229,11 +207,9 @@ function renderTools(): void {
   
   toolGrid.innerHTML = visibleTools.map((tool, index) => createToolCard(tool, index)).join('');
   
-  // Add event listeners to bookmark buttons and action buttons
   toolGrid.addEventListener('click', handleToolCardClick);
 }
 
-// Create tool card HTML
 function createToolCard(tool: Tool, index: number): string {
   const isBookmarked = bookmarkedTools.has(tool.id);
   const animationDelay = (index * 0.1).toFixed(1);
@@ -292,7 +268,6 @@ function createToolCard(tool: Tool, index: number): string {
   `;
 }
 
-// Handle tool card clicks
 function handleToolCardClick(e: Event): void {
   const target = e.target as HTMLElement;
   const button = target.closest('button');
@@ -310,7 +285,6 @@ function handleToolCardClick(e: Event): void {
   }
 }
 
-// Bookmark functionality
 function toggleBookmark(toolId: number, button: HTMLElement): void {
   const icon = button.querySelector('ion-icon');
   
@@ -324,11 +298,9 @@ function toggleBookmark(toolId: number, button: HTMLElement): void {
     if (icon) icon.setAttribute('name', 'bookmark');
   }
   
-  // Save to localStorage
   localStorage.setItem('bookmarkedTools', JSON.stringify(Array.from(bookmarkedTools)));
 }
 
-// Tool actions
 function showToolInfo(toolId: number): void {
   const tool = toolsData.find(t => t.id === toolId);
   if (tool) {
@@ -343,7 +315,6 @@ function tryTool(toolId: number): void {
   }
 }
 
-// Load bookmarks from localStorage
 function loadBookmarks(): void {
   const saved = localStorage.getItem('bookmarkedTools');
   if (saved) {
@@ -356,7 +327,6 @@ function loadBookmarks(): void {
   }
 }
 
-// Initialize the application when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
   loadBookmarks();
   init();
