@@ -9,7 +9,8 @@
     "lastUpdate": "2 days ago",
     "features": ["Hot Reload", "Tree Shaking", "Code Splitting"],
     "color": "blue",
-    "icon": "hammer-outline"
+    "icon": "hammer-outline",
+    "tryLink": "https://webpack.js.org/"
   },
   {
     "id": 2,
