@@ -2,7 +2,7 @@ export interface Tool {
   id: number;
   name: string;
   description: string;
-  category: string;
+  category:string;
   rating: number;
   downloads: string;
   lastUpdate: string;
