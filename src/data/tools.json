@@ -9,7 +9,8 @@
     "lastUpdate": "2 days ago",
     "features": ["Hot Reload", "Tree Shaking", "Code Splitting"],
     "color": "blue",
-    "icon": "hammer-outline"
+    "icon": "hammer-outline",
+    "tryLink": "https://webpack.js.org/concepts/"
   },
   {
     "id": 2,
@@ -21,7 +22,8 @@
     "lastUpdate": "1 week ago",
     "features": ["ESM", "TypeScript", "Fast HMR"],
     "color": "emerald",
-    "icon": "flash-outline"
+    "icon": "flash-outline",
+    "tryLink": "https://vitejs.dev/"
   },
   {
     "id": 3,
@@ -33,7 +35,8 @@
     "lastUpdate": "3 days ago",
     "features": ["ES Modules", "Tree Shaking", "Plugins"],
     "color": "purple",
-    "icon": "code-outline"
+    "icon": "code-outline",
+    "tryLink": "https://rollupjs.org/"
   },
   {
     "id": 4,
@@ -45,7 +48,8 @@
     "lastUpdate": "5 days ago",
     "features": ["Snapshot Testing", "Mocking", "Coverage"],
     "color": "red",
-    "icon": "shield-checkmark-outline"
+    "icon": "shield-checkmark-outline",
+    "tryLink": "https://jestjs.io/"
   },
   {
     "id": 5,
@@ -57,7 +61,8 @@
     "lastUpdate": "1 week ago",
     "features": ["Configurable", "Extensible", "Auto-fix"],
     "color": "yellow",
-    "icon": "checkmark-circle-outline"
+    "icon": "checkmark-circle-outline",
+    "tryLink": "https://eslint.org/"
   },
   {
     "id": 6,
@@ -69,7 +74,8 @@
     "lastUpdate": "2 weeks ago",
     "features": ["Type Safety", "IntelliSense", "Refactoring"],
     "color": "indigo",
-    "icon": "document-text-outline"
+    "icon": "document-text-outline",
+    "tryLink": "https://www.typescriptlang.org/"
   },
   {
     "id": 7,
@@ -81,7 +87,8 @@
     "lastUpdate": "1 week ago",
     "features": ["Zero Config", "Hot Reloading", "Code Splitting"],
     "color": "orange",
-    "icon": "cube-outline"
+    "icon": "cube-outline",
+    "tryLink": "https://parceljs.org/"
   },
   {
     "id": 8,
@@ -93,6 +100,7 @@
     "lastUpdate": "3 days ago",
     "features": ["Opinionated", "Consistent", "Multi-language"],
     "color": "pink",
-    "icon": "brush-outline"
+    "icon": "brush-outline",
+    "tryLink": "https://prettier.io/"
   }
 ]
