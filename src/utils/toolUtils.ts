@@ -5,13 +5,7 @@ export function toggleBookmark(toolId: number, button: HTMLElement, bookmarkedTo
   const icon = button.querySelector('ion-icon');
 
   if (bookmarkedTools.has(toolId)) {
-/*************  ✨ Windsurf Command ⭐  *************/
-  /**
-   * Creates an instance of ToolCard.
-   * @param {HTMLElement} toolGrid - The HTMLElement that will contain the rendered tools.
-   * @param {Set<number>} bookmarkedTools - A set of IDs of tools that are currently bookmarked.
-   */
-/*******  3d9b1501-9aef-41ea-b2cf-ecdc4ce359a8  *******/    bookmarkedTools.delete(toolId);
+    bookmarkedTools.delete(toolId);
     button.classList.remove('active');
     if (icon) icon.setAttribute('name', 'bookmark-outline');
   } else {
@@ -29,15 +23,15 @@ export function showToolInfo(toolId: number): void {
     alert(
       `${tool.name}\n\nCategory: ${tool.category}\nRating: ${tool.rating}/5\nDownloads: ${tool.downloads}\nLast Update: ${tool.lastUpdate}\n\nFeatures:\n• ${tool.features.join(
         '\n• '
-      )}\n\n${tool.description}`
+      )}\n\n${tool.description}\n\nTry it: ${tool.tryLink}`
     );
   }
 }
 
 export function tryTool(toolId: number): void {
   const tool = (toolsData as Tool[]).find((t) => t.id === toolId);
-  if (tool) {
-    alert(`Opening ${tool.name}...\n\nThis would typically redirect to the tool's official website or documentation.`);
+  if (tool && tool.tryLink) {
+    window.open(tool.tryLink, '_blank');
   }
 }
 

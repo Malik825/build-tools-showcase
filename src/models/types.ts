@@ -9,6 +9,7 @@ export interface Tool {
   features: string[];
   color: string;
   icon: string;
+  tryLink: string;
 }
 
 export type SortOption = 'popularity' | 'name' | 'recent' | 'category';
