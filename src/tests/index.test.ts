@@ -6,7 +6,9 @@ import { Tool, SortOption } from '../models/types';
 const mockThemeIcon = { setAttribute: jest.fn() };
 const mockToolGrid = { innerHTML: '' };
 const mockEmptyState = { classList: { add: jest.fn(), remove: jest.fn() } };
-const mockLoadMoreContainer = { classList: { add: jest.fn(), remove: jest.fn(), toggle: jest.fn() } };
+const mockLoadMoreContainer = {
+  classList: { add: jest.fn(), remove: jest.fn(), toggle: jest.fn() },
+};
 const mockTotalToolsEl = { textContent: '' };
 const mockPopularToolsEl = { textContent: '' };
 const mockRecentToolsEl = { textContent: '' };
@@ -19,15 +21,24 @@ const mockCategoryFilters = {
 // @ts-ignore
 document.getElementById = jest.fn((id: string) => {
   switch (id) {
-    case 'theme-icon': return mockThemeIcon;
-    case 'tool-grid': return mockToolGrid;
-    case 'empty-state': return mockEmptyState;
-    case 'load-more-container': return mockLoadMoreContainer;
-    case 'total-tools': return mockTotalToolsEl;
-    case 'popular-tools': return mockPopularToolsEl;
-    case 'recent-tools': return mockRecentToolsEl;
-    case 'category-filters': return mockCategoryFilters;
-    default: return null;
+    case 'theme-icon':
+      return mockThemeIcon;
+    case 'tool-grid':
+      return mockToolGrid;
+    case 'empty-state':
+      return mockEmptyState;
+    case 'load-more-container':
+      return mockLoadMoreContainer;
+    case 'total-tools':
+      return mockTotalToolsEl;
+    case 'popular-tools':
+      return mockPopularToolsEl;
+    case 'recent-tools':
+      return mockRecentToolsEl;
+    case 'category-filters':
+      return mockCategoryFilters;
+    default:
+      return null;
   }
 });
 
@@ -47,13 +58,14 @@ function filterAndSortTools(): void {
   let filtered = [...currentTools];
 
   if (searchQuery) {
-    filtered = filtered.filter((tool) =>
-      tool.name.toLowerCase().includes(searchQuery) ||
-      tool.description.toLowerCase().includes(searchQuery) ||
-      tool.category.toLowerCase().includes(searchQuery) ||
-      tool.features.some((feature: string) =>
-        feature.toLowerCase().includes(searchQuery)
-      )
+    filtered = filtered.filter(
+      (tool) =>
+        tool.name.toLowerCase().includes(searchQuery) ||
+        tool.description.toLowerCase().includes(searchQuery) ||
+        tool.category.toLowerCase().includes(searchQuery) ||
+        tool.features.some((feature: string) =>
+          feature.toLowerCase().includes(searchQuery)
+        )
     );
   }
 
@@ -94,15 +106,23 @@ function updateStats(): void {
 function setupTheme(): void {
   const saved = localStorage.getItem('theme') || 'light';
   document.body.className = `${saved}-theme`;
-  mockThemeIcon.setAttribute('name', saved === 'dark' ? 'sunny-outline' : 'moon-outline');
+  mockThemeIcon.setAttribute(
+    'name',
+    saved === 'dark' ? 'sunny-outline' : 'moon-outline'
+  );
 }
 
 function toggleTheme(): void {
-  const current = document.body.classList.contains('dark-theme') ? 'dark' : 'light';
+  const current = document.body.classList.contains('dark-theme')
+    ? 'dark'
+    : 'light';
   const next = current === 'dark' ? 'light' : 'dark';
   document.body.className = `${next}-theme`;
   localStorage.setItem('theme', next);
-  mockThemeIcon.setAttribute('name', next === 'dark' ? 'sunny-outline' : 'moon-outline');
+  mockThemeIcon.setAttribute(
+    'name',
+    next === 'dark' ? 'sunny-outline' : 'moon-outline'
+  );
 }
 
 function renderTools(): void {
@@ -119,7 +139,9 @@ function renderTools(): void {
   mockEmptyState.classList.add('hidden');
   mockLoadMoreContainer.classList.toggle('hidden', !hasMore);
 
-  mockToolGrid.innerHTML = visible.map((t) => `<div class="tool-card">${t.name}</div>`).join('');
+  mockToolGrid.innerHTML = visible
+    .map((t) => `<div class="tool-card">${t.name}</div>`)
+    .join('');
 }
 
 function toggleBookmark(id: number) {
@@ -168,13 +190,15 @@ describe('Tool Showcase App Tests', () => {
       });
     });
 
-  test('applies saved theme', () => {
-  (localStorage.getItem as jest.Mock).mockReturnValue('dark');
-  setupTheme();
-  expect(document.body.className).toBe('dark-theme');
-  expect(mockThemeIcon.setAttribute).toHaveBeenCalledWith('name', 'sunny-outline');
-});
-
+    test('applies saved theme', () => {
+      (localStorage.getItem as jest.Mock).mockReturnValue('dark');
+      setupTheme();
+      expect(document.body.className).toBe('dark-theme');
+      expect(mockThemeIcon.setAttribute).toHaveBeenCalledWith(
+        'name',
+        'sunny-outline'
+      );
+    });
 
     test('toggles between light and dark', () => {
       document.body.classList.add('light-theme');
@@ -191,13 +215,15 @@ describe('Tool Showcase App Tests', () => {
     test('filters by search query', () => {
       searchQuery = 'webpack';
       filterAndSortTools();
-      expect(filteredTools.some(t => t.name.toLowerCase().includes('webpack'))).toBe(true);
+      expect(
+        filteredTools.some((t) => t.name.toLowerCase().includes('webpack'))
+      ).toBe(true);
     });
 
     test('filters by category', () => {
       selectedCategory = 'Bundlers';
       filterAndSortTools();
-      expect(filteredTools.every(t => t.category === 'Bundlers')).toBe(true);
+      expect(filteredTools.every((t) => t.category === 'Bundlers')).toBe(true);
     });
 
     test('sorts by name', () => {
