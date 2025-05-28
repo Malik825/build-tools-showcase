@@ -137,9 +137,9 @@ export function loadBookmarks(): Set<number> {
       const bookmarks = JSON.parse(saved);
       return new Set(bookmarks);
     } catch (e) {
+      console.error('Error parsing bookmarked tools:', e);
       return new Set();
     }
   }
   return new Set();
 }
-alert;

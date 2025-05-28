@@ -250,7 +250,7 @@ function createToolCard(tool: Tool, index: number): string {
   const {
     id,
     features,
-   
+
     lastUpdate,
     color,
     icon,
