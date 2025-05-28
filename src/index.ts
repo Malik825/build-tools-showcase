@@ -8,13 +8,13 @@ import {
   loadBookmarks,
 } from './utils/toolUtils';
 
-let currentTools: Tool[] = toolsData as Tool[];
+const currentTools: Tool[] = toolsData as Tool[];
 let filteredTools: Tool[] = toolsData as Tool[];
 let selectedCategory: string = 'All';
 let searchQuery: string = '';
 let sortBy: SortOption = 'popularity';
 let visibleToolsCount: number = 6;
-let bookmarkedTools: Set<number> = loadBookmarks();
+const bookmarkedTools: Set<number> = loadBookmarks();
 
 const themeToggle = document.getElementById(
   'theme-toggle'
@@ -250,8 +250,7 @@ function createToolCard(tool: Tool, index: number): string {
   const {
     id,
     features,
-    subdescription,
-    tryLink,
+   
     lastUpdate,
     color,
     icon,

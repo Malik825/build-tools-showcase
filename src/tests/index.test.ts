@@ -18,7 +18,7 @@ const mockCategoryFilters = {
   querySelectorAll: jest.fn(() => []),
 };
 
-// @ts-ignore
+// @ts-expect-error: Mocking getElementById for test environment
 document.getElementById = jest.fn((id: string) => {
   switch (id) {
     case 'theme-icon':
