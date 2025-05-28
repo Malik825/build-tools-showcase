@@ -10,11 +10,10 @@
     "features": ["Hot Reload", "Tree Shaking", "Code Splitting"],
     "color": "blue",
     "icon": "hammer-outline",
-<<<<<<< HEAD
+
     "tryLink": "https://webpack.js.org/concepts/"
-=======
-    "tryLink": "https://webpack.js.org/"
->>>>>>> test/tests
+
+   
   },
   {
     "id": 2,
