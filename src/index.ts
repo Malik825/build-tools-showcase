@@ -8,13 +8,13 @@ import {
   loadBookmarks,
 } from './utils/toolUtils';
 
-const currentTools: Tool[] = toolsData as Tool[];
+let currentTools: Tool[] = toolsData as Tool[];
 let filteredTools: Tool[] = toolsData as Tool[];
 let selectedCategory: string = 'All';
 let searchQuery: string = '';
 let sortBy: SortOption = 'popularity';
 let visibleToolsCount: number = 6;
-const bookmarkedTools: Set<number> = loadBookmarks();
+let bookmarkedTools: Set<number> = loadBookmarks();
 
 const themeToggle = document.getElementById(
   'theme-toggle'
@@ -239,9 +239,9 @@ function renderTools(): void {
   emptyState.classList.add('hidden');
   loadMoreContainer.classList.toggle('hidden', !hasMoreTools);
 
-  toolGrid.innerHTML = visibleTools
-    .map((tool, index) => createToolCard(tool, index))
-    .join('');
+toolGrid.innerHTML = visibleTools
+  .map((tool, index) => createToolCard(tool, index))
+  .join('');
 
   toolGrid.addEventListener('click', handleToolCardClick);
 }
@@ -250,7 +250,7 @@ function createToolCard(tool: Tool, index: number): string {
   const {
     id,
     features,
-
+      
     lastUpdate,
     color,
     icon,
