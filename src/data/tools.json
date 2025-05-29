@@ -12,13 +12,12 @@
     "icon": "hammer-outline",
 
     "tryLink": "https://webpack.js.org/concepts/"
-
-   
   },
   {
     "id": 2,
     "name": "Vite",
-    "description": "Next generation frontend tooling. Lightning fast cold server start with instant hot module replacement.",
+    "description": "Next-generation frontend tooling. Lightning-fast cold starts, instant hot module replacement, and seamless developer experience out of the box. Build, test, and ship modern web apps with power, precision, and performance..",
+    "subdescription": "Reimagine your frontend workflow. Instant HMR, blazing-fast dev servers, optimized builds, and zero-config DX — everything you need to craft responsive, modern web applications at scale.",
     "category": "Build Tool",
     "rating": 4.9,
     "downloads": "890K",

@@ -6,48 +6,45 @@
   <title>Build Tool Showcase - Modern Development Tools</title>
   <meta name="description" content="Discover and explore the best build tools for modern web development. Compare features, ratings, and find the perfect tools for your next project.">
   
-  <!-- Open Graph tags -->
   <meta property="og:title" content="Build Tool Showcase - Modern Development Tools">
   <meta property="og:description" content="Discover and explore the best build tools for modern web development. Compare features, ratings, and find the perfect tools for your next project.">
   <meta property="og:type" content="website">
+  <link rel="shortcut icon" href="" type="image/x-icon">
   
-  <!-- Preconnect to Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  
-  <!-- Ionicons -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
   <script type="module" src="https://unpkg.com/ionicons@7.4.0/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@7.4.0/dist/ionicons/ionicons.js"></script>
   
   <link rel="stylesheet" href="style.css">
 </head>
 <body class="light-theme">
-  <!-- Header -->
-  <header class="header">
+  <header class="header scrolled" id="header">
     <div class="container">
       <div class="header-content">
         <div class="header-left">
           <div class="logo">
             <ion-icon name="settings-outline"></ion-icon>
           </div>
-          <h1 class="site-title">Build Tool Showcase</h1>
+          <h1 class="site-title">FrontendKit</h1>
         </div>
         
-        <!-- Desktop Search Bar -->
         <div class="search-container desktop-search">
           <ion-icon name="search-outline" class="search-icon"></ion-icon>
           <input type="text" id="search-input" placeholder="Search build tools..." class="search-input">
         </div>
 
         <div class="header-right">
-          <!-- Filter Toggle -->
           <button id="filter-toggle" class="btn btn-ghost">
             <ion-icon name="filter-outline"></ion-icon>
             <span>Filters</span>
           </button>
 
-          <!-- Theme Toggle -->
           <button id="theme-toggle" class="btn btn-ghost">
             <ion-icon name="moon-outline" id="theme-icon"></ion-icon>
             <span>Theme</span>
@@ -55,7 +52,6 @@
         </div>
       </div>
 
-      <!-- Mobile Search -->
       <div class="search-container mobile-search">
         <ion-icon name="search-outline" class="search-icon"></ion-icon>
         <input type="text" id="mobile-search-input" placeholder="Search build tools..." class="search-input">
@@ -63,24 +59,20 @@
     </div>
   </header>
 
-  <!-- Filter Panel -->
   <div id="filter-panel" class="filter-panel hidden">
     <div class="container">
       <div class="filter-content">
         <div class="filter-group">
           <span class="filter-label">Category:</span>
           <div id="category-filters" class="filter-badges">
-            <!-- Categories will be populated by TypeScript -->
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Main Content -->
   <main class="main">
     <div class="container">
-      <!-- Stats Bar -->
       <div class="stats-bar">
         <div class="stats-content">
           <div class="stats-left">
@@ -112,12 +104,9 @@
         </div>
       </div>
 
-      <!-- Tool Grid -->
       <div id="tool-grid" class="tool-grid">
-        <!-- Tools will be populated by TypeScript -->
       </div>
 
-      <!-- Load More Button -->
       <div class="load-more-container" id="load-more-container">
         <button id="load-more-btn" class="btn btn-outline">
           <span>Load More Tools</span>
@@ -125,15 +114,16 @@
         </button>
       </div>
 
-      <!-- Empty State -->
       <div id="empty-state" class="empty-state hidden">
         <div class="empty-message">No tools found</div>
         <p class="empty-description">Try adjusting your search or filter criteria</p>
       </div>
     </div>
   </main>
+<div class="tool-info-text" id="tool-info-text">
 
-  <!-- Footer -->
+  
+</div>
   <footer class="footer">
     <div class="container">
       <div class="footer-content">
@@ -154,6 +144,5 @@
     </div>
   </footer>
 
-  <!-- <script src="app.ts" type="module"></script> -->
 </body>
 </html>

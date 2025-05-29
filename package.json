@@ -9,13 +9,10 @@
     "lint": "eslint src/**/*.{ts,tsx}",
     "format": "prettier --write src/**/*.{ts,tsx,scss,json}",
     "check": "npm run lint && npm run format",
-
     "test": "jest",
     "test:coverage": "jest --coverage",
-    "prepare": "husky"
- 
-
-    
+    "prepare": "husky",
+    "precommit": "npm run check"
   },
   "keywords": [],
   "author": "",
@@ -52,5 +49,4 @@
     "lodash": "^4.17.21",
     "moment": "^2.29.4"
   }
-
 }

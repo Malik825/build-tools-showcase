@@ -1,27 +1,45 @@
 import './style.scss';
 import toolsData from './data/tools.json';
 import { Tool, SortOption } from './models/types';
-import { toggleBookmark, showToolInfo, tryTool, loadBookmarks } from './utils/toolUtils';
+import {
+  toggleBookmark,
+  showToolInfo,
+  tryTool,
+  loadBookmarks,
+} from './utils/toolUtils';
 
-let currentTools: Tool[] = toolsData as Tool[];
+const currentTools: Tool[] = toolsData as Tool[];
 let filteredTools: Tool[] = toolsData as Tool[];
+
 let selectedCategory: string = 'All';
 let searchQuery: string = '';
 let sortBy: SortOption = 'popularity';
 let visibleToolsCount: number = 6;
-let bookmarkedTools: Set<number> = loadBookmarks();
+const bookmarkedTools: Set<number> = loadBookmarks();
 
-const themeToggle = document.getElementById('theme-toggle') as HTMLButtonElement;
+const themeToggle = document.getElementById(
+  'theme-toggle'
+) as HTMLButtonElement;
 const themeIcon = document.getElementById('theme-icon') as HTMLElement;
-const filterToggle = document.getElementById('filter-toggle') as HTMLButtonElement;
+const filterToggle = document.getElementById(
+  'filter-toggle'
+) as HTMLButtonElement;
 const filterPanel = document.getElementById('filter-panel') as HTMLElement;
 const searchInput = document.getElementById('search-input') as HTMLInputElement;
-const mobileSearchInput = document.getElementById('mobile-search-input') as HTMLInputElement;
-const categoryFilters = document.getElementById('category-filters') as HTMLElement;
+const mobileSearchInput = document.getElementById(
+  'mobile-search-input'
+) as HTMLInputElement;
+const categoryFilters = document.getElementById(
+  'category-filters'
+) as HTMLElement;
 const sortSelect = document.getElementById('sort-select') as HTMLSelectElement;
 const toolGrid = document.getElementById('tool-grid') as HTMLElement;
-const loadMoreBtn = document.getElementById('load-more-btn') as HTMLButtonElement;
-const loadMoreContainer = document.getElementById('load-more-container') as HTMLElement;
+const loadMoreBtn = document.getElementById(
+  'load-more-btn'
+) as HTMLButtonElement;
+const loadMoreContainer = document.getElementById(
+  'load-more-container'
+) as HTMLElement;
 const emptyState = document.getElementById('empty-state') as HTMLElement;
 const totalToolsEl = document.getElementById('total-tools') as HTMLElement;
 const popularToolsEl = document.getElementById('popular-tools') as HTMLElement;
@@ -42,7 +60,9 @@ function setupTheme(): void {
 }
 
 function toggleTheme(): void {
-  const currentTheme = document.body.classList.contains('dark-theme') ? 'dark' : 'light';
+  const currentTheme = document.body.classList.contains('dark-theme')
+    ? 'dark'
+    : 'light';
   const newTheme = currentTheme === 'light' ? 'dark' : 'light';
 
   document.body.className = `${newTheme}-theme`;
@@ -51,7 +71,10 @@ function toggleTheme(): void {
 }
 
 function updateThemeIcon(theme: string): void {
-  themeIcon.setAttribute('name', theme === 'light' ? 'moon-outline' : 'sunny-outline');
+  themeIcon.setAttribute(
+    'name',
+    theme === 'light' ? 'moon-outline' : 'sunny-outline'
+  );
 }
 
 function setupEventListeners(): void {
@@ -80,7 +103,10 @@ function setupEventListeners(): void {
 }
 
 function setupCategoryFilters(): void {
-  const categories = ['All', ...Array.from(new Set(currentTools.map((tool) => tool.category)))];
+  const categories = [
+    'All',
+    ...Array.from(new Set(currentTools.map((tool) => tool.category))),
+  ];
 
   categoryFilters.innerHTML = categories
     .map(
@@ -115,7 +141,10 @@ function handleCategoryChange(category: string): void {
   selectedCategory = category;
 
   categoryFilters.querySelectorAll('.filter-badge').forEach((badge) => {
-    badge.classList.toggle('active', badge.getAttribute('data-category') === category);
+    badge.classList.toggle(
+      'active',
+      badge.getAttribute('data-category') === category
+    );
   });
 
   filterAndSortTools();
@@ -137,7 +166,9 @@ function filterAndSortTools(): void {
         tool.name.toLowerCase().includes(searchQuery) ||
         tool.description.toLowerCase().includes(searchQuery) ||
         tool.category.toLowerCase().includes(searchQuery) ||
-        tool.features.some((feature) => feature.toLowerCase().includes(searchQuery))
+        tool.features.some((feature) =>
+          feature.toLowerCase().includes(searchQuery)
+        )
     );
   }
 
@@ -151,8 +182,16 @@ function filterAndSortTools(): void {
       break;
     case 'recent':
       filtered.sort((a, b) => {
-        const aRecent = a.lastUpdate.includes('day') ? 1 : a.lastUpdate.includes('week') ? 2 : 3;
-        const bRecent = b.lastUpdate.includes('day') ? 1 : b.lastUpdate.includes('week') ? 2 : 3;
+        const aRecent = a.lastUpdate.includes('day')
+          ? 1
+          : a.lastUpdate.includes('week')
+            ? 2
+            : 3;
+        const bRecent = b.lastUpdate.includes('day')
+          ? 1
+          : b.lastUpdate.includes('week')
+            ? 2
+            : 3;
         return aRecent - bRecent;
       });
       break;
@@ -177,8 +216,10 @@ function handleLoadMore(): void {
 function updateStats(): void {
   const totalTools = currentTools.length;
   const popularTools = currentTools.filter((tool) => tool.rating >= 4.5).length;
-  const recentTools = currentTools.filter((tool) => tool.lastUpdate.includes('day') || tool.lastUpdate.includes('week'))
-    .length;
+  const recentTools = currentTools.filter(
+    (tool) =>
+      tool.lastUpdate.includes('day') || tool.lastUpdate.includes('week')
+  ).length;
 
   totalToolsEl.textContent = totalTools.toString();
   popularToolsEl.textContent = popularTools.toString();
@@ -199,60 +240,76 @@ function renderTools(): void {
   emptyState.classList.add('hidden');
   loadMoreContainer.classList.toggle('hidden', !hasMoreTools);
 
-  toolGrid.innerHTML = visibleTools.map((tool, index) => createToolCard(tool, index)).join('');
+  toolGrid.innerHTML = visibleTools
+    .map((tool, index) => createToolCard(tool, index))
+    .join('');
 
   toolGrid.addEventListener('click', handleToolCardClick);
 }
 
 function createToolCard(tool: Tool, index: number): string {
-  const isBookmarked = bookmarkedTools.has(tool.id);
+  const {
+    id,
+    features,
+
+    lastUpdate,
+    color,
+    icon,
+    name,
+    description,
+    category,
+    rating,
+    downloads,
+  } = tool;
+  const isBookmarked = bookmarkedTools.has(id);
   const animationDelay = (index * 0.1).toFixed(1);
 
   return `
-    <div class="tool-card" data-color="${tool.color}" style="animation-delay: ${animationDelay}s">
+    <div class="tool-card" data-color="${color}" style="animation-delay: ${animationDelay}s">
       <div class="tool-header">
         <div class="tool-info">
           <div class="tool-icon">
-            <ion-icon name="${tool.icon}"></ion-icon>
+            <ion-icon name="${icon}"></ion-icon>
           </div>
           <div class="tool-details">
-            <h3>${tool.name}</h3>
+            <h3>${name}</h3>
             <div class="tool-meta">
-              <span class="category-badge">${tool.category}</span>
+              <span class="category-badge">${category}</span>
               <div class="rating">
                 <ion-icon name="star" class="star-icon"></ion-icon>
-                <span>${tool.rating}</span>
+                <span>${rating}</span>
               </div>
             </div>
           </div>
         </div>
-        <button class="bookmark-btn ${isBookmarked ? 'active' : ''}" data-tool-id="${tool.id}">
+        <button class="bookmark-btn ${isBookmarked ? 'active' : ''}" data-tool-id="${id}">
           <ion-icon name="${isBookmarked ? 'bookmark' : 'bookmark-outline'}"></ion-icon>
         </button>
       </div>
       
-      <p class="tool-description">${tool.description}</p>
+      <p class="tool-description">${description}</p>
+    
       
       <div class="tool-features">
-        ${tool.features.map((feature) => `<span class="feature-badge">${feature}</span>`).join('')}
+        ${features.map((feature) => `<span class="feature-badge">${feature}</span>`).join('')}
       </div>
       
       <div class="tool-footer">
         <div class="tool-stats">
           <div class="tool-stat">
             <ion-icon name="download-outline"></ion-icon>
-            <span>${tool.downloads}</span>
+            <span>${downloads}</span>
           </div>
           <div class="tool-stat">
             <ion-icon name="time-outline"></ion-icon>
-            <span>${tool.lastUpdate}</span>
+            <span>${lastUpdate}</span>
           </div>
         </div>
         <div class="tool-actions">
-          <button class="info-btn" data-tool-id="${tool.id}">
+          <button class="info-btn" data-tool-id="${id}">
             <ion-icon name="information-circle-outline"></ion-icon>
           </button>
-          <button class="try-btn" data-tool-id="${tool.id}">
+          <button class="try-btn" data-tool-id="${id}">
             <span>Try Now</span>
             <ion-icon name="arrow-forward-outline"></ion-icon>
           </button>

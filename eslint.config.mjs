@@ -1,29 +1,23 @@
 import js from '@eslint/js';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
-import prettierPlugin from 'eslint-plugin-prettier';
-import airbnbBase from 'eslint-config-airbnb-base';
+import { defineConfig } from 'eslint/config';
 
-export default tseslint.config(
+export default defineConfig([
   {
-    files: ['**/*.{js,mjs,cjs,ts,mts,cts}'],
-    extends: [js.configs.recommended, ...tseslint.configs.recommended, airbnbBase],
-    languageOptions: {
-      globals: globals.browser,
-      parser: tseslint.parser,
-      parserOptions: {
-        ecmaVersion: 12,
-        sourceType: 'module',
-      },
-    },
-    plugins: {
-      prettier: prettierPlugin,
-    },
+    files: ['*/.{js,mjs,cjs,ts,mts,cts}'],
+    plugins: { js },
+    extends: ['js/recommended'],
     rules: {
-      'no-console': 'warn',
-      indent: ['error', 2],
-      quotes: ['error', 'single'],
-      'prettier/prettier': 'error',
+      // 'no-console': ['error', { allow: ['warn', 'error'] }],
+      // semi: ['error', 'always'],
     },
   },
-);
+  {
+    files: ['*/.{js,mjs,cjs,ts,mts,cts}'],
+    languageOptions: {
+      globals: globals.browser,
+    },
+  },
+  tseslint.configs.recommended,
+]);
