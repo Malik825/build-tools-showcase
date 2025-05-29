@@ -40,7 +40,6 @@ body {
   }
 }
 
-/* Header */
 .header {
   position: relative;
   left: 0;
@@ -124,10 +123,14 @@ body.dark-theme .tool-card:hover {
 }
 
 .site-title {
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   font-weight: 700;
   color: var(--text-primary);
   letter-spacing: -0.025em;
+  transition: all 0.3s ease;
+  border: 1px solid var(--border-primary);
+  padding: 8px 16px;
+  border-radius: 5.5rem;
 }
 
 .header-right {
@@ -136,7 +139,6 @@ body.dark-theme .tool-card:hover {
   gap: 1rem;
 }
 
-/* Search */
 .search-container {
   position: relative;
   flex: 1;
@@ -187,7 +189,6 @@ body.dark-theme .tool-card:hover {
   }
 }
 
-/* Buttons */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -234,7 +235,6 @@ body.dark-theme .tool-card:hover {
   }
 }
 
-/* Filter Panel */
 .filter-panel {
   background-color: var(--bg-secondary);
   border-bottom: 1px solid var(--border-primary);
@@ -295,12 +295,10 @@ body.dark-theme .tool-card:hover {
   color: #93c5fd;
 }
 
-/* Main Content */
 .main {
   padding: 2rem 0;
 }
 
-/* Stats Bar */
 .stats-bar {
   background-color: var(--bg-secondary);
   border: 1px solid var(--border-primary);
@@ -382,7 +380,6 @@ body.dark-theme .tool-card:hover {
   cursor: pointer;
 }
 
-/* Tool Grid */
 .tool-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -390,7 +387,6 @@ body.dark-theme .tool-card:hover {
   margin-bottom: 3rem;
 }
 
-/* Tool Card */
 .tool-card {
   background-color: var(--bg-secondary);
   border: 1px solid var(--border-primary);
@@ -603,7 +599,6 @@ body.dark-theme .tool-card:hover {
   gap: 0.5rem;
 }
 
-/* Color variants for tool cards */
 .tool-card[data-color='blue'] {
   .tool-icon {
     background: linear-gradient(135deg, #3b82f6, #1d4ed8);
@@ -732,7 +727,6 @@ body.dark-theme .tool-card:hover {
   }
 }
 
-/* Dark theme overrides for color variants */
 .dark-theme {
   .tool-card[data-color='blue'] .category-badge {
     background-color: #1e3a8a;
@@ -768,17 +762,17 @@ body.dark-theme .tool-card:hover {
   }
 }
 
-/* Load More */
 .load-more-container {
   text-align: center;
   margin-top: 3rem;
 
   &.hidden {
     display: none;
+  animation: fadeInUp 0.6s ease forwards;
+
   }
 }
 
-/* Empty State */
 .empty-state {
   text-align: center;
   padding: 3rem 0;
@@ -798,7 +792,6 @@ body.dark-theme .tool-card:hover {
   color: var(--text-muted);
 }
 
-/* Footer */
 .footer {
   background-color: var(--bg-secondary);
   border-top: 1px solid var(--border-primary);
@@ -859,12 +852,10 @@ body.dark-theme .tool-card:hover {
   }
 }
 
-/* Utilities */
 .hidden {
   display: none;
 }
 
-/* Responsive adjustments */
 @media (max-width: 640px) {
   .header-right .btn span {
     display: none;
