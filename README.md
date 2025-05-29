@@ -4,51 +4,65 @@ A small web application showcasing modern front-end development workflows using 
 
 ## Project Overview
 
-This project aims to solidify the understanding of modern front-end development workflows by creating a small web application. It includes features like a theme switcher, filtering, sorting, and unit tests.
+This project aims to solidify the understanding of modern front-end development workflows by creating a small web application. It includes features like a theme switcher, filtering, sorting, footer, and unit tests.
+
+## Style implementation
+
+utilized sass to ensure effective styling and also a way to modularize out styles for readability, performance and cross browser compatibility
 
 ## Setup and Run Instructions
 
 1. **mkdir build-tool-showcase:**
+
    ```bash
    git init
    ```
 
 2. **Install dependencies and configurations:**
+
    ```bash
    npm install to install the packages and the dependencies like webpack, jest and typescript
    ```
 
 3. **Run the development server:**
+
    ```bash
    npm run dev
    ```
 
 4. **Build for production:**
+
    ```bash
+
    npm run build
    ```
 
 5. **Linting:**
+
    ```bash
    npm run lint
    ```
 
 6. **Formatting:**
+
    ```bash
    npm run format
    ```
 
-7. **Combined lint & format:**
+ **Combined lint & format:**
+
    ```bash
    npm run check
    ```
 
-8. **Run unit tests:**
+   **Run unit tests:**
+
    ```bash
    npm run test
    ```
 
-9. **Run tests with coverage:**
+ **Run tests with coverage:**
+
    ```bash
    npm run test:coverage
    ```
@@ -87,12 +101,10 @@ Sass (SCSS) is used for styling. SCSS variables, mixins, and partials are utiliz
 
 ### Testing Information
 
-Unit tests are implemented using Jest. Tests cover significant functions and modules, ensuring good code coverage. Test files are located in the `__tests__` directory.
+Unit tests are implemented using Jest. Tests cover significant functions and modules, ensuring good code coverage. Test files are located in the `tests` directory.
 
 ### Pre-commit Hook
 
 A pre-commit hook is set up using Husky to run linting and formatting checks before each commit. This ensures code quality is maintained.
 
-
-
-This README provides an overview of the project, setup instructions, and details about the build process, linting rules, and testing strategy.
+This README    provides an overview of the project, setup instructions, and details about the build process, linting rules, and testing strategy.

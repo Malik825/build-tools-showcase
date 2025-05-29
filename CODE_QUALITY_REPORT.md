@@ -16,6 +16,7 @@ Initially, the project had several linting errors and warnings. The following ar
 
 - **Action Taken:** Removed or used the declared variables.
 - **Example:**
+
   ```typescript
   let unusedVariable; 
   ```
@@ -24,6 +25,7 @@ Initially, the project had several linting errors and warnings. The following ar
 
 - **Action Taken:** Added semicolons where they were missing and needed.
 - **Example:**
+  
   ```typescript
   let variable = 'value'; 
   ```
@@ -32,6 +34,7 @@ Initially, the project had several linting errors and warnings. The following ar
 
 - **Action Taken:** Fixed spacing issues using Prettier.
 - **Example:**
+  
   ```typescript
   let variable = 'value'; 
   ```
@@ -40,14 +43,16 @@ Initially, the project had several linting errors and warnings. The following ar
 
 - **Action Taken:** Ensured all variables were properly defined before use.
 - **Example:**
+
   ```typescript
   let definedVariable = 'value'; 
   ```
 
 ### Improper Import/Export
 
-- **Action Taken:** Corrected import/export statements.
-- **Example:**
+**Action Taken:** Corrected import/export statements.
+**Example:**
+
   ```typescript
   import { Tool } from './models/types'; 
   ```
